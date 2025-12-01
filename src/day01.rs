@@ -80,4 +80,11 @@ mod tests {
         let result = SecretEntrance::new().solve(input);
         assert_eq!(result, Ok("3".to_string()));
     }
+
+    #[test]
+    fn example_b() {
+        let input = include_str!("../input/example1.txt");
+        let result = SecretEntrance::new().solve_b(input);
+        assert_eq!(result, Ok("6".to_string()));
+    }
 }
