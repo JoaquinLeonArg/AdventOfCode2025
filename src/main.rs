@@ -1,10 +1,12 @@
 pub mod day01;
 pub mod day02;
+pub mod day03;
 
 use advent_of_code2025::Challenge;
 
 use crate::day01::SecretEntrance;
 use crate::day02::GiftShop;
+use crate::day03::Lobby;
 use std::env::args;
 use std::fs;
 
@@ -17,6 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let handler: Box<dyn Challenge> = match day.as_str() {
         "1" => Box::new(SecretEntrance::new()),
         "2" => Box::new(GiftShop::new()),
+        "3" => Box::new(Lobby::new()),
         _ => return Err(format!("Invalid day: {}", day).into()),
     };
 
