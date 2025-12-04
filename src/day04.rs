@@ -64,7 +64,7 @@ impl Challenge for PrintingDepartment {
             .map(|row| row.chars().into_iter().collect())
             .collect();
 
-        let offsets: [(i32, i32); 8] = [
+        let offsets: [(isize, isize); 8] = [
             (-1, -1),
             (-1, 0),
             (-1, 1),
@@ -82,20 +82,21 @@ impl Challenge for PrintingDepartment {
             for (y, row) in data.iter().enumerate() {
                 for (x, cell) in row.iter().enumerate() {
                     let neighbours = offsets.iter().fold(0, |acc, offset| {
-                        let checked_y = y as i32 + offset.1;
-                        let checked_x = x as i32 + offset.0;
-                        if checked_x < 0 || checked_y < 0 {
-                            return acc;
-                        }
-                        acc + match data
-                            .get(checked_y as usize)
-                            .unwrap_or(&vec![])
-                            .get(checked_x as usize)
-                            .unwrap_or(&'.')
+                        if let Some(checked_y) = y.checked_add_signed(offset.1)
+                            && let Some(checked_x) = x.checked_add_signed(offset.0)
                         {
-                            '@' => 1,
-                            _ => 0,
+                            return acc
+                                + match data
+                                    .get(checked_y)
+                                    .unwrap_or(&vec![])
+                                    .get(checked_x)
+                                    .unwrap_or(&'.')
+                                {
+                                    '@' => 1,
+                                    _ => 0,
+                                };
                         }
+                        return acc;
                     });
                     if neighbours < 4 && cell == &'@' {
                         result += 1;
