@@ -4,6 +4,7 @@ pub mod day03;
 pub mod day04;
 pub mod day05;
 pub mod day06;
+pub mod day07;
 
 use advent_of_code2025::Challenge;
 
@@ -13,11 +14,13 @@ use crate::day03::Lobby;
 use crate::day04::PrintingDepartment;
 use crate::day05::Cafeteria;
 use crate::day06::TrashCompactor;
+use crate::day07::Laboratories;
+
 use std::fs;
 use std::time::SystemTime;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    for day in 1..=6 {
+    for day in 1..=7 {
         let handler: Box<dyn Challenge> = match day {
             1 => Box::new(SecretEntrance::new()),
             2 => Box::new(GiftShop::new()),
@@ -25,6 +28,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             4 => Box::new(PrintingDepartment::new()),
             5 => Box::new(Cafeteria::new()),
             6 => Box::new(TrashCompactor::new()),
+            7 => Box::new(Laboratories::new()),
             _ => return Err(format!("Invalid day: {}", day).into()),
         };
         let input = fs::read_to_string(format!("./input/day{}.txt", day))?;
